@@ -1,0 +1,118 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "6dde2109-42ca-4cf9-885e-5d928949b9ad",
+      "name": "Embeddings OpenAI1",
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "position": [
+        2280,
+        2350
+      ],
+      "typeVersion": 1.2,
+      "credentials": {
+        "openAiApi": {
+          "id": "JSPFLNImx8SGH5aT",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "o3",
+          "mode": "list",
+          "cachedResultName": "o3"
+        },
+        "options": {}
+      },
+      "id": "fd638fb0-db5f-43fc-816d-6c5462204982",
+      "name": "OpenAI Chat Model1",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "position": [
+        2480,
+        2150
+      ],
+      "typeVersion": 1.2,
+      "credentials": {
+        "openAiApi": {
+          "id": "JSPFLNImx8SGH5aT",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "description": "Can answer questions and do research in previous email conversations. Use this tool whenever you need more context about past conversations to an email. \nFor better retrieval and more context always pass the email-adresses to the query!\n"
+      },
+      "id": "bbdfdfd9-f35d-4e02-aa31-6ad39ba27b4d",
+      "name": "Research context and infos in previous conversations",
+      "type": "@n8n/n8n-nodes-langchain.toolVectorStore",
+      "position": [
+        2300,
+        1952.5
+      ],
+      "typeVersion": 1.1
+    },
+    {
+      "parameters": {},
+      "id": "e0e0b246-0091-4cef-97ea-18f1b48d9dd9",
+      "name": "Threads History Vector Store",
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreInMemory",
+      "position": [
+        2200,
+        2152.5
+      ],
+      "typeVersion": 1.1
+    }
+  ],
+  "connections": {
+    "Embeddings OpenAI1": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Threads History Vector Store",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Research context and infos in previous conversations",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Research context and infos in previous conversations": {
+      "ai_tool": [
+        []
+      ]
+    },
+    "Threads History Vector Store": {
+      "ai_vectorStore": [
+        [
+          {
+            "node": "Research context and infos in previous conversations",
+            "type": "ai_vectorStore",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateId": "4366",
+    "templateCredsSetupCompleted": true,
+    "instanceId": "4b6b5b91642f3419739e6e338acbc58cd4c4c4fcdc370daaee5de886ba91c850"
+  }
+}
